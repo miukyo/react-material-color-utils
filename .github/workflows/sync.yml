@@ -41,9 +41,13 @@ jobs:
         run: |
           jq '.compilerOptions.noUnusedLocals = false' tsconfig.json > tsconfig.json.tmp && mv tsconfig.json.tmp tsconfig.json
 
-      - name: Apply patches
+      - name: Apply patches (optional)
         run: |
-          git apply --reject --whitespace=fix .github/patches/*.patch
+          if ls .github/patches/*.patch 1> /dev/null 2>&1; then
+            git apply --reject --whitespace=fix .github/patches/*.patch
+          else
+            echo "No patch files found, skipping."
+          fi
 
       - name: Configure Git
         run: |
