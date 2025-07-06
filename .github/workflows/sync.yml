@@ -3,7 +3,7 @@ name: Sync & Publish TypeScript Package
 on:
   workflow_dispatch: # Allows manual trigger
   schedule:
-    - cron: '0 0 * * *' # Runs daily at midnight UTC
+    - cron: "0 0 * * *" # Runs daily at midnight UTC
   push:
     branches:
       - main # Or your main branch for new changes in *your* repo
@@ -25,7 +25,7 @@ jobs:
         run: |
           # Remove existing files/dirs in your repo root (except .git)
           # This ensures a clean copy and removes files no longer present in source
-          find . -maxdepth 1 -mindepth 1 -not -name '.git' -exec rm -rf {} +
+          find . -maxdepth 1 -mindepth 1 -not -name '.git' -not -name 'temp_mcu_repo' -not -name '.github' -exec rm -rf {} +
 
           # Copy the contents of the typescript folder to your repo root
           cp -R temp_mcu_repo/typescript/. .
@@ -36,6 +36,9 @@ jobs:
       - name: Update package.json name
         run: |
           jq '.name = "react-material-color-utils"' package.json > package.json.tmp && mv package.json.tmp package.json
+      - name: Update tsconfig.json compilerOptions.noUnusedLocals
+        run: |
+          jq '.compilerOptions.noUnusedLocals = false' tsconfig.json > tsconfig.json.tmp && mv tsconfig.json.tmp tsconfig.json
 
       - name: Configure Git
         run: |
@@ -54,3 +57,29 @@ jobs:
         run: |
           git commit -m "Sync: Update from material-color-utilities/typescript and set package name"
           git push origin ${{ github.ref_name }} # Pushes to the same branch that triggered the workflow
+  build_and_publish:
+      needs: sync_material_color_utilities # This job depends on the sync being successful
+      runs-on: ubuntu-latest
+      # Only publish if there were changes pushed by the sync job, or if manually triggered
+      if: needs.sync_material_color_utilities.outputs.changes == 'true' || github.event_name == 'workflow_dispatch'
+
+      steps:
+        - name: Checkout Your Repository (for build/publish)
+          uses: actions/checkout@v4
+
+        - name: Set up Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: '20'
+            registry-url: 'https://registry.npmjs.org'
+
+        - name: Install dependencies
+          run: npm install
+
+        - name: Build TypeScript package
+          run: npm run build
+
+        - name: Publish to npm
+          run: npm publish --access public
+          env:
+            NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
