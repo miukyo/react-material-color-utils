@@ -1,0 +1,117 @@
+diff --git a/scheme/scheme_content.ts b/scheme/scheme_content.ts
+index 8f4adf4..ab59a1c 100644
+--- a/scheme/scheme_content.ts
++++ b/scheme/scheme_content.ts
+@@ -16,7 +16,7 @@
+  */
+ 
+ import {SpecVersion} from '../dynamiccolor/color_spec.js';
+-import {DynamicScheme, Platform} from '../dynamiccolor/dynamic_scheme';
++import {DynamicScheme, Platform} from '../dynamiccolor/dynamic_scheme.js';
+ import {Variant} from '../dynamiccolor/variant.js';
+ import {Hct} from '../hct/hct.js';
+ 
+diff --git a/scheme/scheme_expressive.ts b/scheme/scheme_expressive.ts
+index f4e2dae..74b7d85 100644
+--- a/scheme/scheme_expressive.ts
++++ b/scheme/scheme_expressive.ts
+@@ -16,7 +16,7 @@
+  */
+ 
+ import {SpecVersion} from '../dynamiccolor/color_spec.js';
+-import {DynamicScheme, Platform} from '../dynamiccolor/dynamic_scheme';
++import {DynamicScheme, Platform} from '../dynamiccolor/dynamic_scheme.js';
+ import {Variant} from '../dynamiccolor/variant.js';
+ import {Hct} from '../hct/hct.js';
+ 
+diff --git a/scheme/scheme_fidelity.ts b/scheme/scheme_fidelity.ts
+index 114129d..d4321e7 100644
+--- a/scheme/scheme_fidelity.ts
++++ b/scheme/scheme_fidelity.ts
+@@ -16,7 +16,7 @@
+  */
+ 
+ import {SpecVersion} from '../dynamiccolor/color_spec.js';
+-import {DynamicScheme, Platform} from '../dynamiccolor/dynamic_scheme';
++import {DynamicScheme, Platform} from '../dynamiccolor/dynamic_scheme.js';
+ import {Variant} from '../dynamiccolor/variant.js';
+ import {Hct} from '../hct/hct.js';
+ 
+diff --git a/scheme/scheme_fruit_salad.ts b/scheme/scheme_fruit_salad.ts
+index ea20657..2119592 100644
+--- a/scheme/scheme_fruit_salad.ts
++++ b/scheme/scheme_fruit_salad.ts
+@@ -16,7 +16,7 @@
+  */
+ 
+ import {SpecVersion} from '../dynamiccolor/color_spec.js';
+-import {DynamicScheme, Platform} from '../dynamiccolor/dynamic_scheme';
++import {DynamicScheme, Platform} from '../dynamiccolor/dynamic_scheme.js';
+ import {Variant} from '../dynamiccolor/variant.js';
+ import {Hct} from '../hct/hct.js';
+ 
+diff --git a/scheme/scheme_monochrome.ts b/scheme/scheme_monochrome.ts
+index 0143a5f..38fb501 100644
+--- a/scheme/scheme_monochrome.ts
++++ b/scheme/scheme_monochrome.ts
+@@ -16,7 +16,7 @@
+  */
+ 
+ import {SpecVersion} from '../dynamiccolor/color_spec.js';
+-import {DynamicScheme, Platform} from '../dynamiccolor/dynamic_scheme';
++import {DynamicScheme, Platform} from '../dynamiccolor/dynamic_scheme.js';
+ import {Variant} from '../dynamiccolor/variant.js';
+ import {Hct} from '../hct/hct.js';
+ 
+diff --git a/scheme/scheme_neutral.ts b/scheme/scheme_neutral.ts
+index fd25d1e..277b619 100644
+--- a/scheme/scheme_neutral.ts
++++ b/scheme/scheme_neutral.ts
+@@ -16,7 +16,7 @@
+  */
+ 
+ import {SpecVersion} from '../dynamiccolor/color_spec.js';
+-import {DynamicScheme, Platform} from '../dynamiccolor/dynamic_scheme';
++import {DynamicScheme, Platform} from '../dynamiccolor/dynamic_scheme.js';
+ import {Variant} from '../dynamiccolor/variant.js';
+ import {Hct} from '../hct/hct.js';
+ 
+diff --git a/scheme/scheme_rainbow.ts b/scheme/scheme_rainbow.ts
+index 22fafe6..dc4e52b 100644
+--- a/scheme/scheme_rainbow.ts
++++ b/scheme/scheme_rainbow.ts
+@@ -16,7 +16,7 @@
+  */
+ 
+ import {SpecVersion} from '../dynamiccolor/color_spec.js';
+-import {DynamicScheme, Platform} from '../dynamiccolor/dynamic_scheme';
++import {DynamicScheme, Platform} from '../dynamiccolor/dynamic_scheme.js';
+ import {Variant} from '../dynamiccolor/variant.js';
+ import {Hct} from '../hct/hct.js';
+ 
+diff --git a/scheme/scheme_tonal_spot.ts b/scheme/scheme_tonal_spot.ts
+index 68c2df6..4f8007d 100644
+--- a/scheme/scheme_tonal_spot.ts
++++ b/scheme/scheme_tonal_spot.ts
+@@ -16,7 +16,7 @@
+  */
+ 
+ import {SpecVersion} from '../dynamiccolor/color_spec.js';
+-import {DynamicScheme, Platform} from '../dynamiccolor/dynamic_scheme';
++import {DynamicScheme, Platform} from '../dynamiccolor/dynamic_scheme.js';
+ import {Variant} from '../dynamiccolor/variant.js';
+ import {Hct} from '../hct/hct.js';
+ 
+diff --git a/scheme/scheme_vibrant.ts b/scheme/scheme_vibrant.ts
+index 5a1ae2b..d2ee78c 100644
+--- a/scheme/scheme_vibrant.ts
++++ b/scheme/scheme_vibrant.ts
+@@ -16,7 +16,7 @@
+  */
+ 
+ import {SpecVersion} from '../dynamiccolor/color_spec.js';
+-import {DynamicScheme, Platform} from '../dynamiccolor/dynamic_scheme';
++import {DynamicScheme, Platform} from '../dynamiccolor/dynamic_scheme.js';
+ import {Variant} from '../dynamiccolor/variant.js';
+ import {Hct} from '../hct/hct.js';
+ 
