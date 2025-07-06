@@ -1,0 +1,56 @@
+name: Sync & Publish TypeScript Package
+
+on:
+  workflow_dispatch: # Allows manual trigger
+  schedule:
+    - cron: '0 0 * * *' # Runs daily at midnight UTC
+  push:
+    branches:
+      - main # Or your main branch for new changes in *your* repo
+
+jobs:
+  sync_material_color_utilities:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Your Repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }} # GITHUB_TOKEN has write permissions to *this* repo
+
+      - name: Clone Material Color Utilities
+        run: |
+          git clone https://github.com/material-foundation/material-color-utilities.git temp_mcu_repo
+
+      - name: Copy TypeScript Folder to Root and Clean Up
+        run: |
+          # Remove existing files/dirs in your repo root (except .git)
+          # This ensures a clean copy and removes files no longer present in source
+          find . -maxdepth 1 -mindepth 1 -not -name '.git' -exec rm -rf {} +
+
+          # Copy the contents of the typescript folder to your repo root
+          cp -R temp_mcu_repo/typescript/. .
+
+          # Clean up the cloned repo
+          rm -rf temp_mcu_repo
+
+      - name: Update package.json name
+        run: |
+          jq '.name = "react-material-color-utils"' package.json > package.json.tmp && mv package.json.tmp package.json
+
+      - name: Configure Git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "github-actions-bot@users.noreply.github.com"
+
+      - name: Check for Changes
+        id: git_status
+        run: |
+          git add .
+          git diff --cached --exit-code || echo "changes=true" >> "$GITHUB_OUTPUT"
+        continue-on-error: true # Allow subsequent steps to run even if no changes
+
+      - name: Commit and Push if Changes
+        if: steps.git_status.outputs.changes == 'true'
+        run: |
+          git commit -m "Sync: Update from material-color-utilities/typescript and set package name"
+          git push origin ${{ github.ref_name }} # Pushes to the same branch that triggered the workflow
