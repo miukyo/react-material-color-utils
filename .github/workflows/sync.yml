@@ -88,7 +88,7 @@ jobs:
             else
               SUFFIX=1
             fi
-            NEW_VERSION="$BASE-$SUFFIX"
+            NEW_VERSION="$BASE-nightly.$SUFFIX"
             jq --arg v "$NEW_VERSION" '.version = $v' package.json > package.json.tmp && mv package.json.tmp package.json
 
         - name: Set up Node.js
