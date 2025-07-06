@@ -45,25 +45,6 @@ jobs:
         run: |
           git apply --reject --whitespace=fix .github/patches/*.patch
 
-      - name: Get latest version from npm
-        id: get_latest_version
-        run: |
-          LATEST=$(npm view react-material-color-utils version || echo "0.0.0")
-          echo "latest_version=$LATEST" >> $GITHUB_OUTPUT
-
-      - name: Auto-increment version with suffix
-        run: |
-          CURRENT=$(jq -r .version package.json)
-          BASE=$(echo "$CURRENT" | cut -d'-' -f1)
-          LATEST="${{ steps.get_latest_version.outputs.latest_version }}"
-          if [[ "$LATEST" =~ $BASE-([0-9]+)$ ]]; then
-            SUFFIX=$((BASH_REMATCH[1]+1))
-          else
-            SUFFIX=1
-          fi
-          NEW_VERSION="$BASE-$SUFFIX"
-          jq --arg v "$NEW_VERSION" '.version = $v' package.json > package.json.tmp && mv package.json.tmp package.json
-
       - name: Configure Git
         run: |
           git config user.name "GitHub Actions Bot"
@@ -90,6 +71,25 @@ jobs:
       steps:
         - name: Checkout Your Repository (for build/publish)
           uses: actions/checkout@v4
+
+        - name: Get latest version from npm
+          id: get_latest_version
+          run: |
+            LATEST=$(npm view react-material-color-utils version || echo "0.0.0")
+            echo "latest_version=$LATEST" >> $GITHUB_OUTPUT
+
+        - name: Auto-increment version with suffix
+          run: |
+            CURRENT=$(jq -r .version package.json)
+            BASE=$(echo "$CURRENT" | cut -d'-' -f1)
+            LATEST="${{ steps.get_latest_version.outputs.latest_version }}"
+            if [[ "$LATEST" =~ $BASE-([0-9]+)$ ]]; then
+              SUFFIX=$((BASH_REMATCH[1]+1))
+            else
+              SUFFIX=1
+            fi
+            NEW_VERSION="$BASE-$SUFFIX"
+            jq --arg v "$NEW_VERSION" '.version = $v' package.json > package.json.tmp && mv package.json.tmp package.json
 
         - name: Set up Node.js
           uses: actions/setup-node@v4
